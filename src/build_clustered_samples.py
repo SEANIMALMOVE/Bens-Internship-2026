@@ -1,3 +1,5 @@
+### This script samples all clusters for each of the 12 clustering methods,
+
 from __future__ import annotations
 
 from pathlib import Path

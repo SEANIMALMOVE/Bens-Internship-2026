@@ -1,3 +1,5 @@
+### This script samples up to 100 rows per cluster for each of the manually chosen clustering methods,
+
 from __future__ import annotations
 
 from pathlib import Path

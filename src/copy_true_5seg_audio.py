@@ -1,3 +1,5 @@
+### copy the 5-second audio files that were marked as "ToReview" in the diagnostics CSV to a separate folder for manual review. 
+
 from pathlib import Path
 import csv
 import shutil
