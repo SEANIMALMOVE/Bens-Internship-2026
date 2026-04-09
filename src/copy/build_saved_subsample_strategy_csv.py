@@ -175,6 +175,26 @@ def main() -> None:
                 if selected_for_review:
                     selected_rows.append(out)
 
+    # Assign one review reason per filename based on highest-priority matching method.
+    reason_by_filename: dict[str, tuple[int, str]] = {}
+    for row in selected_rows:
+        filename = str(row.get("filename", "")).strip()
+        if filename == "":
+            continue
+
+        priority = int(row.get("priority", 10**9))
+        method = str(row.get("method", "")).strip()
+        previous = reason_by_filename.get(filename)
+        if previous is None or priority < previous[0]:
+            reason_by_filename[filename] = (priority, method)
+
+    for row in long_rows:
+        filename = str(row.get("filename", "")).strip()
+        if filename in reason_by_filename:
+            row["ReviewReason"] = reason_by_filename[filename][1]
+        else:
+            row["ReviewReason"] = ""
+
     long_csv = diagnostics_dir / "saved_subsample_strategy_long.csv"
     selected_csv = diagnostics_dir / "saved_subsample_strategy_selected.csv"
 
@@ -191,6 +211,7 @@ def main() -> None:
         "reduced_embeddings_idx",
         "source_subsample_csv",
         "source_row",
+        "ReviewReason",
     ]
 
     write_csv(long_csv, long_rows, fields)
