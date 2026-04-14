@@ -1,4 +1,4 @@
-"""Build the 5th-approach review CSV from the full diagnostics file.
+"""Build the 6th-approach review CSV from the full diagnostics file.
 
 This approach keeps only the chosen clusters from the review notebooks,
 samples up to 100 rows per selected cluster, and writes a CSV with the same
@@ -23,8 +23,8 @@ REVIEW_RULES: dict[str, tuple[str, set[int] | None]] = {
     "umap_3d_hdbscan": ("in_set", {0, 1, 2, 4, 5}),
     "tsne_3d_hdbscan": ("in_set", {1, 2}),
     "umap_20d_hdbscan": ("in_set", {0, 1, 2, 4, 5}),
-    "tsne_20d_hdbscan": ("all_non_noise", None),
-    "pca_3d_hdbscan": ("in_set", set(range(0, 25))),
+    "tsne_20d_hdbscan": ("in_set", set(range(1, 17))),
+    "pca_3d_hdbscan": ("in_set", set(range(1, 25))),
 }
 
 
@@ -250,10 +250,10 @@ def main() -> None:
         if reason in owned_counts:
             owned_counts[reason] += 1
 
-    output_csv = diagnostics_dir / "5th_approach_sample_100_per_cluster.csv"
+    output_csv = diagnostics_dir / "6th_approach_sample_100_per_cluster.csv"
     df_sample.to_csv(output_csv, index=False)
 
-    print(f"Wrote 5th approach CSV: {output_csv}")
+    print(f"Wrote 6th approach CSV: {output_csv}")
     print(f"Rows: {len(df_sample)}")
     print(f"ToReview=True: {int(df_sample['ToReview'].sum())}")
     for method in REVIEW_PRIORITY:
