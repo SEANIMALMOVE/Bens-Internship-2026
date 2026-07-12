@@ -2,11 +2,13 @@
 
 A comprehensive pipeline for extracting embeddings from underwater audio recordings, clustering them using multiple algorithms, and analyzing cluster quality through dimensionality reduction and visualization.
 
+**392,400 five second audio segments clustered with no manual labels, 25 distinct groups isolated by the best configuration (PCA 3D + HDBSCAN), validated across 8 dimensionality reduction and clustering combinations.**
+
 ## Overview
 
-This project processes large-scale audio datasets (specifically Posidonia marine soundscape recordings) by:
+This project processes large-scale audio datasets (392,400 five second Posidonia marine soundscape segments) by:
 
-1. **Extracting embeddings** using Google's PerchV2 model for bird/nature sound recognition
+1. **Extracting embeddings** using Google's PerchV2 model, a bird and nature sound recognition model repurposed here for underwater bioacoustic audio
 2. **Creating manifests** of audio files with associated metadata
 3. **Clustering embeddings** using multiple algorithms (K-means, HDBSCAN)
 4. **Dimensionality reduction** using PCA, UMAP, and t-SNE for 3D/20D visualizations
@@ -77,7 +79,7 @@ Multiple clustering approaches explored:
 | UMAP_TSNE_3D_Kmeans | 3D | K-means | **Review** |
 | UMAP_TSNE_3D_HDBSCAN | 3D | HDBSCAN | **Review** |
 | UMAP_TSNE_20D_HDBSCAN | 20D | HDBSCAN | **Review** |
-| PCA_3D_HDBSCAN | 3D | HDBSCAN | **Review** |
+| **PCA_3D_HDBSCAN** 🏆 | 3D | HDBSCAN | **Review, best result (25 clusters)** |
 | PCA_3D_Kmeans | 3D | K-means | No Review |
 | PCA_256D_HDBSCAN | 256D | HDBSCAN | No Review |
 | PCA_256D_Kmeans | 256D | K-means | No Review |
@@ -180,10 +182,11 @@ python src/copy/Tries/build_diagnostics_csv.py
 
 ## Key Findings
 
-- **UMAP_TSNE_3D_Kmeans** and **UMAP_TSNE_3D_HDBSCAN**: High-quality 3D projections with clear cluster separation
-- **PCA_3D_HDBSCAN**: Dense cluster groups with good specificity (25 distinct clusters identified)
-- **20D approaches**: Better semantic separation than 3D for HDBSCAN results
-- High-dimensional (256D) clustering: Useful for technical evaluation but less interpretable
+- **Scale**: all 392,400 five second segments were embedded and scored across every configuration below, not a sample
+- **PCA_3D_HDBSCAN** 🏆: the best result, dense and well separated cluster groups with good specificity (25 distinct clusters identified directly from raw audio, no manual labels used)
+- **UMAP_TSNE_3D_Kmeans** and **UMAP_TSNE_3D_HDBSCAN**: high-quality 3D projections with clear cluster separation, an independent method that confirms the same underlying structure
+- **20D approaches**: better semantic separation than 3D for HDBSCAN results
+- High-dimensional (256D) clustering: useful for technical evaluation but less interpretable
 
 ## Notes
 
