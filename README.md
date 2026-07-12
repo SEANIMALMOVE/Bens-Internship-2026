@@ -188,6 +188,16 @@ python src/copy/Tries/build_diagnostics_csv.py
 - **20D approaches**: better semantic separation than 3D for HDBSCAN results
 - High-dimensional (256D) clustering: useful for technical evaluation but less interpretable
 
+### Results, visualized
+
+**PCA reduced to 3 dimensions with HDBSCAN clustering, the winning configuration (25 distinct clusters):**
+
+![PCA 3D projection with HDBSCAN clusters, showing 25 distinct dense cluster groups isolated from raw audio embeddings](assets/pca_3d_hdbscan.png)
+
+**t-SNE reduced to 20 dimensions (first 3 shown) with HDBSCAN clustering, an independent confirmation that the same structure holds under a different reduction method:**
+
+![t-SNE 20D projection with HDBSCAN clusters, confirming the same cluster structure found by the PCA method](assets/tsne_20d_hdbscan.png)
+
 ## Notes
 
 - Audio segments standardized to ~5 seconds for consistent embedding extraction
